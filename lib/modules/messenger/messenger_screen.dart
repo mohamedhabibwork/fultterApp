@@ -6,8 +6,7 @@ import 'package:todo/modules/messenger/story_widget.dart';
 import 'package:todo/modules/messenger/user_chat_widget.dart';
 
 class MessengerScreen extends StatelessWidget {
-
-  final List<Array> chats =[];
+  final List<Array> chats = [];
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +84,9 @@ class MessengerScreen extends StatelessWidget {
                 height: 100,
                 child: ListView.separated(
                   shrinkWrap: true,
-                  separatorBuilder: (context, index) => const SizedBox(width: 15,),
+                  separatorBuilder: (context, index) => const SizedBox(
+                    width: 15,
+                  ),
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => buildStoryItem(),
                   itemCount: chats.length + 20,
@@ -97,7 +98,9 @@ class MessengerScreen extends StatelessWidget {
               ListView.separated(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                separatorBuilder: (context, index) => const SizedBox(height: 15,),
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 15,
+                ),
                 scrollDirection: Axis.vertical,
                 itemBuilder: (context, index) => buildChatItem(),
                 itemCount: chats.length + 20,
@@ -110,5 +113,6 @@ class MessengerScreen extends StatelessWidget {
   }
 
   Widget buildChatItem() => UserChatWidget();
+
   Widget buildStoryItem() => StoryWidget();
 }

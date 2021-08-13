@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:todo/shared/components/conponents.dart';
 
 // ignore: use_key_in_widget_constructors
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController __email = TextEditingController(
     text: '',
   );
@@ -11,6 +16,8 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController __password = TextEditingController(
     text: '',
   );
+
+  bool visiblePassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,7 @@ class LoginScreen extends StatelessWidget {
                   const Text(
                     'Login',
                     style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.bold,
                       fontSize: 40,
                     ),
                   ),
@@ -41,33 +48,49 @@ class LoginScreen extends StatelessWidget {
                   defaultFormField(
                       inputController: __email,
                       keyboardType: TextInputType.emailAddress,
-                      labelText: 'Email Address A',
-                      validate: (String? value)=>(value!.isNotEmpty) ? null : 'email address',
-                      prefix: Icons.email
-                  ),
+                      labelText: 'Email Address :',
+                      validate: (String? value) =>
+                          (value!.isNotEmpty) ? null : 'email address',
+                      prefix: Icons.email),
                   const SizedBox(
                     height: 20.0,
                   ),
-                  TextFormField(
-                    controller: __password,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(),
-                      prefixIcon: Icon(Icons.lock),
-                      suffixIcon: Icon(Icons.remove_red_eye),
-                    ),
-                    validator: (String? value)=>(value!.isNotEmpty) ? null : 'password',
-                  ),
+                  defaultFormField(
+                      inputController: __password,
+                      keyboardType: TextInputType.visiblePassword,
+                      labelText: "Password",
+                      IsPassword: visiblePassword,
+                      validate: (String? value) =>
+                          (value!.isNotEmpty) ? null : 'Password Required',
+                      prefix: Icons.lock,
+                      IsPressSuffixIcon: true,
+                      onPressSuffixIcon: () {
+                        setState(() {
+                          visiblePassword = !visiblePassword;
+                        });
+                      },
+                      suffix: visiblePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off),
                   const SizedBox(
                     height: 20.0,
                   ),
                   defaultButton(
                     context: context,
-                    text: 'Login text',
-                    function: (){
-                      if(FormLoginKey.currentState!.validate()){
+                    text: 'Login',
+                    function: () {
+                      if (FormLoginKey.currentState!.validate()) {
+                        print(__email.text);
+                        print(__password.text);
+                        FormLoginKey.currentState!.reset();
+                      }
+                    },
+                  ),
+                  defaultButton(
+                    context: context,
+                    text: 'Register',
+                    function: () {
+                      if (FormLoginKey.currentState!.validate()) {
                         print(__email.text);
                         print(__password.text);
                         FormLoginKey.currentState!.reset();
@@ -78,7 +101,8 @@ class LoginScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('don\'t have Account ?'),
-                      TextButton(onPressed: (){}, child: const Text('Register'))
+                      TextButton(
+                          onPressed: () {}, child: const Text('Register'))
                     ],
                   )
                 ],

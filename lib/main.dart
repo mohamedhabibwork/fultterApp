@@ -1,7 +1,19 @@
+import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:todo/modules/login/login_screen.dart';
+import 'package:flutter/services.dart';
+import 'package:todo/shared/bloc_observer.dart';
+
+import 'layout/home_layout.dart';
 
 void main() {
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
+
+  Bloc.observer = MyBlocObserver();
+
   runApp(const MyApp());
 }
 
@@ -23,10 +35,10 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.green,
       ),
       // home: const HomeScreen(title: 'modules.Home',),
-      home: LoginScreen(),
+      home: HomeLayout(),
     );
   }
 }
