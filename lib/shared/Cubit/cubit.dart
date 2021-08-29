@@ -64,7 +64,7 @@ class AppCubit extends Cubit<AppStates> {
         "title": title,
         "date": date,
         "time": time,
-        "status": status
+        "status": "new"
       }).then((value) {
         changeBottomSheetShowState(false);
         emit(AppInsertTaskState());
